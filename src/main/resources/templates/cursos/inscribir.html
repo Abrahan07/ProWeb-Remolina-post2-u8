@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscribir Estudiante</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        th { background: #065A82; color: white; }
+        tr:nth-child(even) { background: #f5f5f5; }
+        .btn { padding: 6px 12px; text-decoration: none; border-radius: 4px; cursor: pointer; border: none; }
+        .btn-inscribir { background: #2E7D32; color: white; }
+        .btn-desinscribir { background: #C62828; color: white; }
+        .btn-back { background: #808080; color: white; display: inline-block; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+<h1>Inscribir estudiante en: <span th:text="${curso.nombre}"></span></h1>
+<a th:href="@{/cursos}" class="btn btn-back">← Volver</a>
+
+<h2>Estudiantes inscritos</h2>
+<table>
+    <thead>
+    <tr><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Acción</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="e : ${curso.estudiantes}">
+        <td th:text="${e.nombre}"></td>
+        <td th:text="${e.apellido}"></td>
+        <td th:text="${e.correo}"></td>
+        <td>
+            <form th:action="@{/cursos/{cid}/desinscribir/{eid}(cid=${curso.id},eid=${e.id})}" method="post">
+                <button type="submit" class="btn btn-desinscribir">Desinscribir</button>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${#sets.isEmpty(curso.estudiantes)}">
+        <td colspan="4" style="text-align:center">No hay estudiantes inscritos.</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Inscribir nuevo estudiante</h2>
+<table>
+    <thead>
+    <tr><th>Nombre</th><th>Apellido</th><th>Correo</th><th>Acción</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="e : ${estudiantes}">
+        <td th:text="${e.nombre}"></td>
+        <td th:text="${e.apellido}"></td>
+        <td th:text="${e.correo}"></td>
+        <td>
+            <form th:action="@{/cursos/{cid}/inscribir/{eid}(cid=${curso.id},eid=${e.id})}" method="post">
+                <button type="submit" class="btn btn-inscribir">Inscribir</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
