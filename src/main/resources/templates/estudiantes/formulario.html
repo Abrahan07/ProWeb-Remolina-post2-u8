@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Formulario</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        label { display: block; margin-top: 1rem; font-weight: bold; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; margin-top: 4px; }
+        .error { color: #C62828; font-size: 0.85rem; }
+        .btn { padding: 8px 16px; margin-top: 1rem; cursor: pointer; }
+        .btn-save { background: #065A82; color: white; border: none; border-radius: 4px; }
+        .btn-cancel { background: #808080; color: white; text-decoration: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<h1 th:text="${titulo}"></h1>
+<form th:action="@{/estudiantes/guardar}" th:object="${estudiante}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Nombre:</label>
+    <input type="text" th:field="*{nombre}" />
+    <span class="error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+
+    <label>Apellido:</label>
+    <input type="text" th:field="*{apellido}" />
+    <span class="error" th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></span>
+
+    <label>Correo:</label>
+    <input type="email" th:field="*{correo}" />
+    <span class="error" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></span>
+
+    <label>Carrera:</label>
+    <input type="text" th:field="*{carrera}" />
+    <span class="error" th:if="${#fields.hasErrors('carrera')}" th:errors="*{carrera}"></span>
+
+    <br>
+    <button type="submit" class="btn btn-save" th:text="${titulo}">Guardar</button>
+    <a th:href="@{/estudiantes}" class="btn btn-cancel">Cancelar</a>
+</form>
+</body>
+</html>
